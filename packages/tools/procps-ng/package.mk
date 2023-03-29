@@ -3,7 +3,6 @@
 
 PKG_NAME="procps-ng"
 PKG_VERSION="3.3.17"
-PKG_SHA256="8374d281f91e5fc9bb9ea8dc991b25331e3a2b0299b46f22c633f7fb6bcb0764"
 PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.com/procps-ng/procps"
 PKG_URL="https://gitlab.com/procps-ng/procps/-/archive/v${PKG_VERSION}/procps-v${PKG_VERSION}.tar.bz2"
