@@ -19,6 +19,10 @@ for dtb in $RELEASE_DIR/3rdparty/bootloader/device_trees $RELEASE_DIR/3rdparty/b
   [ -e "$dtb" ] && mcopy -s "$dtb" ::
 done
 
+
+find "${RELEASE_DIR}/3rdparty/bootloader/device_trees" -name "*.dtb" ! -name "g12b_s922x_x88_king_rev_a.dtb" ! -name "sc2_s905x4_ugoos_x4.dtb" ! -name "sc2_s905x4_4g_1gbit.dtb" ! -name "g12b_s922x_beelink_gt_king.dtb" -exec rm {} \;
+
+
 if [ -f "$RELEASE_DIR/3rdparty/bootloader/config.ini" ]; then
   mcopy $RELEASE_DIR/3rdparty/bootloader/config.ini ::
 fi
