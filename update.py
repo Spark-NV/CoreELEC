@@ -3,9 +3,10 @@ import re
 import sys
 from github import Github
 
-KODI_REPO_NAME = 'Spark-NV/CoreELEC'
+KODI_REPO_NAME = 'Spark-NV/xbmc'
+KODI_BRANCH_NAME = 'aml-5.4-20.1'
 SETTINGS_REPO_NAME = 'Spark-NV/service.coreelec.settings'
-BRANCH_NAME = 'coreelec-20'
+SETTINGS_BRANCH_NAME = 'coreelec-20'
 coreelec_dir = os.path.dirname(os.path.abspath(__file__))
 
 kodi_files_to_update = [
@@ -23,7 +24,7 @@ settings_files_to_update = [
 def update_settings_links():
     g = Github()
     repo = g.get_repo(SETTINGS_REPO_NAME)
-    latest_commit = repo.get_branch(BRANCH_NAME).commit
+    latest_commit = repo.get_branch(SETTINGS_BRANCH_NAME).commit
     latest_commit_hash = latest_commit.sha
 
     for file_path in settings_files_to_update:
@@ -40,7 +41,7 @@ def update_settings_links():
 def update_kodi_links():
     g = Github()
     repo = g.get_repo(KODI_REPO_NAME)
-    latest_commit = repo.get_branch(BRANCH_NAME).commit
+    latest_commit = repo.get_branch(KODI_BRANCH_NAME).commit
     latest_commit_hash = latest_commit.sha
 
     for file_path in kodi_files_to_update:
