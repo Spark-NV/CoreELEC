@@ -1,7 +1,13 @@
 import os
 import re
+import sys
+from github import Github
 
-# Define the files to be updated for Kodi and Settings links
+KODI_REPO_NAME = 'Spark-NV/CoreELEC'
+SETTINGS_REPO_NAME = 'Spark-NV/service.coreelec.settings'
+BRANCH_NAME = 'coreelec-20'
+coreelec_dir = os.path.dirname(os.path.abspath(__file__))
+
 kodi_files_to_update = [
     "./projects/Amlogic-ce/packages/mediacenter/kodi/package.mk",
     "./projects/Amlogic-ce/devices/Amlogic-ne/packages/mediacenter/kodi/package.mk",
@@ -14,8 +20,39 @@ settings_files_to_update = [
     "./packages/mediacenter/LibreELEC-settings/package.mk",
 ]
 
-# Define the CoreELEC directory
-coreelec_dir = os.path.dirname(os.path.abspath(__file__))
+def update_settings_links():
+    g = Github()
+    repo = g.get_repo(SETTINGS_REPO_NAME)
+    latest_commit = repo.get_branch(BRANCH_NAME).commit
+    latest_commit_hash = latest_commit.sha
+
+    for file_path in settings_files_to_update:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+        
+        with open(file_path, 'w') as f:
+            for line in lines:
+                if 'PKG_VERSION=' in line:
+                    f.write(f'PKG_VERSION="{latest_commit_hash}"\n')
+                else:
+                    f.write(line)
+
+def update_kodi_links():
+    g = Github()
+    repo = g.get_repo(KODI_REPO_NAME)
+    latest_commit = repo.get_branch(BRANCH_NAME).commit
+    latest_commit_hash = latest_commit.sha
+
+    for file_path in kodi_files_to_update:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+        
+        with open(file_path, 'w') as f:
+            for line in lines:
+                if 'PKG_VERSION=' in line:
+                    f.write(f'PKG_VERSION="{latest_commit_hash}"\n')
+                else:
+                    f.write(line)
 
 def update_kodi_version():
     new_version = input("Enter new Kodi version number (e.g. 22.5 or 22.5.1): ")
@@ -127,7 +164,7 @@ def show_current_settings_hash():
             print(f"\n{file_path} \033[32m=\033[0m PKG_VERSION={hash_string}")
 
 while True:
-    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update kodi version\n")
+    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. Auto update kodi version\n7. Auto update Settings version\n8. Exit\n")
     if choice == "1":
         update_kodi_link()
         break
@@ -143,5 +180,16 @@ while True:
     elif choice == "5":
         update_kodi_version()
         break
+    elif choice == "6":
+        print("Updating Kodi links...")
+        update_kodi_links()
+        print("Kodi links updated successfully.")
+    elif choice == "7":
+        print("Updating Settings links...")
+        update_kodi_links()
+        print("Settings links updated successfully.")
+    elif choice == "8":
+        print("Exiting...")
+        sys.exit()
     else:
         print("Invalid choice. Please try again.")
