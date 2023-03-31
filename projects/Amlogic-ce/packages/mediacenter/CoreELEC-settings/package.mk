@@ -2,7 +2,7 @@
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="CoreELEC-settings"
-PKG_VERSION="8af00c17d7eb2d5d8573444e5d3ed9b48a3e3ab0"
+PKG_VERSION="b45d5755ca33282f1c77248ae7dd002974bb677f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://coreelec.org"
 PKG_URL="https://github.com/Spark-NV/service.coreelec.settings/archive/$PKG_VERSION.tar.gz"

@@ -8,6 +8,9 @@ KODI_BRANCH_NAME = 'aml-5.4-20.1'
 SETTINGS_REPO_NAME = 'Spark-NV/service.coreelec.settings'
 SETTINGS_BRANCH_NAME = 'coreelec-20'
 coreelec_dir = os.path.dirname(os.path.abspath(__file__))
+RED = "\033[1;31m"
+GREEN = "\033[1;32m"
+RESET = "\033[0m"
 
 kodi_files_to_update = [
     "./projects/Amlogic-ce/packages/mediacenter/kodi/package.mk",
@@ -50,11 +53,11 @@ def update_kodi_version():
         f.writelines(lines)
 
     if old_major and old_minor:
-        print("\nUpdated Kodi version from \033[1;31m{}.{}\033[0m to \033[1;32m{}.{}\033[0m\n".format(old_major.strip('"'), old_minor.strip('"'), major, minor))
+        print("\nUpdated Kodi version from " + RED + old_major.strip('\"') + "." + old_minor.strip('\"') + RESET + " to " + GREEN + str(major) + "." + str(minor) + RESET + "\n")
     elif old_major:
-        print("\nUpdated Kodi version from \033[1;31m{}\033[0m to \033[1;32m{}.{}\033[0m\n".format(old_major.strip('"'), major, minor))
+        print("\nUpdated Kodi version from " + RED + old_major.strip('\"') + RESET + " to " + GREEN + str(major) + "." + str(minor) + RESET + "\n")
     else:
-        print("\nUpdated Kodi version to \033[1;32m{}.{}\033[0m\n".format(major, minor))
+        print(f"\nUpdated Kodi version to {GREEN}{major}.{minor}{RESET}\n")
 
 
 def update_settings_links():
@@ -106,12 +109,12 @@ def show_current_hash():
         elif current_hash_string == hash_string:
             matching_files.append(file_path)
         else:
-            print(f"\n{file_path} \033[31mDOES NOT MATCH\033[0m PKG_VERSION={current_hash_string}")
+            print(f"\n{file_path} {RED}DOES NOT MATCH{RESET} PKG_VERSION={current_hash_string}")
     if len(matching_files) == len(kodi_files_to_update):
-        print(f"\nPKG_VERSION= \033[31m{hash_string}\033[0m\n")
+        print(f"\nPKG_VERSION= {RED}{hash_string}{RESET}\n")
     else:
         for file_path in matching_files:
-            print(f"\n{file_path} \033[32m=\033[0m PKG_VERSION={hash_string}")
+            print(f"\n{file_path} {GREEN}MATCHES{RESET} PKG_VERSION={hash_string}")
 
 def show_current_settings_hash():
     hash_string = None
@@ -128,31 +131,34 @@ def show_current_settings_hash():
         elif current_hash_string == hash_string:
             matching_files.append(file_path)
         else:
-            print(f"\n{file_path} \033[31mDOES NOT MATCH\033[0m PKG_VERSION={current_hash_string}")
+            print(f"\n{file_path} {RED}DOES NOT MATCH{RESET} PKG_VERSION={current_hash_string}")
     if len(matching_files) == len(settings_files_to_update):
-        print(f"\nPKG_VERSION= \033[31m{hash_string}\033[0m\n")
+        print(f"\nPKG_VERSION= {RED}{hash_string}{RESET}\n")
     else:
         for file_path in matching_files:
-            print(f"\n{file_path} \033[32m=\033[0m PKG_VERSION={hash_string}")
+            print(f"\n{file_path} {GREEN}MATCHES{RESET} PKG_VERSION={hash_string}")
 
 while True:
     choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. Exit\n")
     if choice == "1":
-        print("Updating Kodi links...")
+        print(RED + "Updating Kodi links...\n" + RESET)
         update_kodi_links()
-        print("Kodi links updated successfully.")
+        print(GREEN + "Kodi links updated successfully.\n" + RESET)
     elif choice == "2":
-        print("Updating Settings links...")
-        update_kodi_links()
-        print("Settings links updated successfully.")
+        print(RED + "Updating Settings links...\n" + RESET)
+        update_settings_links()
+        print(GREEN + "Settings links updated successfully.\n" + RESET)
     elif choice == "3":
         show_current_hash()
+        print()
     elif choice == "4":
         show_current_settings_hash()
+        print()
     elif choice == "5":
         update_kodi_version()
+        print()
     elif choice == "6":
-        print("Exiting...")
+        print(RED + "Exiting...\n" + RESET)
         sys.exit()
     else:
         print("Invalid choice. Please try again.")
