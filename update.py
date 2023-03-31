@@ -21,40 +21,6 @@ settings_files_to_update = [
     "./packages/mediacenter/LibreELEC-settings/package.mk",
 ]
 
-def update_settings_links():
-    g = Github()
-    repo = g.get_repo(SETTINGS_REPO_NAME)
-    latest_commit = repo.get_branch(SETTINGS_BRANCH_NAME).commit
-    latest_commit_hash = latest_commit.sha
-
-    for file_path in settings_files_to_update:
-        with open(file_path, 'r') as f:
-            lines = f.readlines()
-        
-        with open(file_path, 'w') as f:
-            for line in lines:
-                if 'PKG_VERSION=' in line:
-                    f.write(f'PKG_VERSION="{latest_commit_hash}"\n')
-                else:
-                    f.write(line)
-
-def update_kodi_links():
-    g = Github()
-    repo = g.get_repo(KODI_REPO_NAME)
-    latest_commit = repo.get_branch(KODI_BRANCH_NAME).commit
-    latest_commit_hash = latest_commit.sha
-
-    for file_path in kodi_files_to_update:
-        with open(file_path, 'r') as f:
-            lines = f.readlines()
-        
-        with open(file_path, 'w') as f:
-            for line in lines:
-                if 'PKG_VERSION=' in line:
-                    f.write(f'PKG_VERSION="{latest_commit_hash}"\n')
-                else:
-                    f.write(line)
-
 def update_kodi_version():
     new_version = input("Enter new Kodi version number (e.g. 22.5 or 22.5.1): ")
     version_parts = new_version.split(".")
@@ -91,34 +57,39 @@ def update_kodi_version():
         print("\nUpdated Kodi version to \033[1;32m{}.{}\033[0m\n".format(major, minor))
 
 
+def update_settings_links():
+    g = Github()
+    repo = g.get_repo(SETTINGS_REPO_NAME)
+    latest_commit = repo.get_branch(SETTINGS_BRANCH_NAME).commit
+    latest_commit_hash = latest_commit.sha
 
-
-# Define functions to update Kodi and Settings links
-def update_kodi_link():
-    new_string = input("Enter the new kodi version hash/string: ")
-    for file_path in kodi_files_to_update:
-        with open(os.path.join(coreelec_dir, file_path), "r") as f:
-            content = f.read()
-        # Use regular expressions to find the old string
-        pattern = r'PKG_VERSION="(.*?)"'
-        old_string = re.findall(pattern, content)[0]
-        content = content.replace(f'PKG_VERSION="{old_string}"', f'PKG_VERSION="{new_string}"')
-        with open(os.path.join(coreelec_dir, file_path), "w") as f:
-            f.write(content)
-    print(f"\033[1m\nKodi/XBMC links/Hash's updated\033[0m\nNew string: \033[32m{new_string}\033[0m\nOld string: \033[31m{old_string}\033[0m\n")
-
-def update_settings_link():
-    new_string = input("Enter the new settings version hash/string: ")
     for file_path in settings_files_to_update:
-        with open(os.path.join(coreelec_dir, file_path), "r") as f:
-            content = f.read()
-        # Use regular expressions to find the old string
-        pattern = r'PKG_VERSION="(.*?)"'
-        old_string = re.findall(pattern, content)[0]
-        content = content.replace(f'PKG_VERSION="{old_string}"', f'PKG_VERSION="{new_string}"')
-        with open(os.path.join(coreelec_dir, file_path), "w") as f:
-            f.write(content)
-    print(f"\033[1m\nSettings links/Hash's updated\033[0m\nNew string: \033[32m{new_string}\033[0m\nOld string: \033[31m{old_string}\033[0m\n")
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+        
+        with open(file_path, 'w') as f:
+            for line in lines:
+                if 'PKG_VERSION=' in line:
+                    f.write(f'PKG_VERSION="{latest_commit_hash}"\n')
+                else:
+                    f.write(line)
+
+def update_kodi_links():
+    g = Github()
+    repo = g.get_repo(KODI_REPO_NAME)
+    latest_commit = repo.get_branch(KODI_BRANCH_NAME).commit
+    latest_commit_hash = latest_commit.sha
+
+    for file_path in kodi_files_to_update:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+        
+        with open(file_path, 'w') as f:
+            for line in lines:
+                if 'PKG_VERSION=' in line:
+                    f.write(f'PKG_VERSION="{latest_commit_hash}"\n')
+                else:
+                    f.write(line)
 
 def show_current_hash():
     hash_string = None
@@ -165,31 +136,22 @@ def show_current_settings_hash():
             print(f"\n{file_path} \033[32m=\033[0m PKG_VERSION={hash_string}")
 
 while True:
-    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. Auto update kodi version\n7. Auto update Settings version\n8. Exit\n")
+    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. Exit\n")
     if choice == "1":
-        update_kodi_link()
-        break
-    elif choice == "2":
-        update_settings_link()
-        break
-    elif choice == "3":
-        show_current_hash()
-        break
-    elif choice == "4":
-        show_current_settings_hash()
-        break
-    elif choice == "5":
-        update_kodi_version()
-        break
-    elif choice == "6":
         print("Updating Kodi links...")
         update_kodi_links()
         print("Kodi links updated successfully.")
-    elif choice == "7":
+    elif choice == "2":
         print("Updating Settings links...")
         update_kodi_links()
         print("Settings links updated successfully.")
-    elif choice == "8":
+    elif choice == "3":
+        show_current_hash()
+    elif choice == "4":
+        show_current_settings_hash()
+    elif choice == "5":
+        update_kodi_version()
+    elif choice == "6":
         print("Exiting...")
         sys.exit()
     else:
