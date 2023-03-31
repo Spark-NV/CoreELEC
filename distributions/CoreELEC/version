@@ -1,5 +1,5 @@
 # OS_MAJOR: OS major Version
-  OS_MAJOR="1"
+  OS_MAJOR="20"
 
 # OS_MINOR: OS minor Version
   OS_MINOR="1"
