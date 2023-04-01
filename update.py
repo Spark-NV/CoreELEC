@@ -142,10 +142,9 @@ def update_repo():
     os.system('git add .')
     commit_text = input("Enter commit message: ")
     os.system(f'git commit -m "{commit_text}"')
+    print(GREEN + "Pushing all changes to origin\n" + RESET)
     os.system('git push')
-
-def hello():
-    print("Hello, world!")
+    print(GREEN + "Successfully pushed all changes to origin\n" + RESET)
 
 while True:
     choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. GIT UPDATE\n7. Exit\n")
