@@ -163,15 +163,26 @@ def build():
         print(RED + "Invalid choice. Please try again." + RESET)
 
 while True:
-    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. GIT UPDATE\n7. Build CoreELEC\n8. Exit\n")
+    print("\nChoose an option:\n")
+    print("1. Update Kodi hash/link")
+    print("2. Update Settings hash/link\n------------------------------")
+    print("3. Show current Kodi hash/link")
+    print("4. Show current settings hash/link\n-----------------------------------")
+    print("5. Update CoreELEC version")
+    print("6. GIT UPDATE")
+    print("7. Build CoreELEC\n-----------------")
+    print("8. Exit")
+
+    choice = input("\nEnter the option number: ")
+
     if choice == "1":
-        print(RED + "Updating Kodi links...\n" + RESET)
+        print(f"\n{RED}Updating Kodi links...{RESET}\n")
         update_kodi_links()
-        print(GREEN + "Kodi links updated successfully.\n" + RESET)
+        print(f"{GREEN}Kodi links updated successfully.{RESET}\n")
     elif choice == "2":
-        print(RED + "Updating Settings links...\n" + RESET)
+        print(f"\n{RED}Updating Settings links...{RESET}\n")
         update_settings_links()
-        print(GREEN + "Settings links updated successfully.\n" + RESET)
+        print(f"{GREEN}Settings links updated successfully.{RESET}\n")
     elif choice == "3":
         show_current_hash()
         print()
@@ -186,7 +197,7 @@ while True:
     elif choice == "7":
         build()
     elif choice == "8":
-        print(RED + "\nExiting...\n" + RESET)
+        print(f"\n{RED}Exiting...{RESET}\n")
         sys.exit()
     else:
-        print("Invalid choice. Please try again.")
+        print("Invalid choice. Please try again.\n")
