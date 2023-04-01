@@ -138,8 +138,17 @@ def show_current_settings_hash():
         for file_path in matching_files:
             print(f"\n{file_path} {GREEN}MATCHES{RESET} PKG_VERSION={hash_string}")
 
+def update_repo():
+    os.system('git add .')
+    commit_text = input("Enter commit message: ")
+    os.system(f'git commit -m "{commit_text}"')
+    os.system('git push')
+
+def hello():
+    print("Hello, world!")
+
 while True:
-    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. Exit\n")
+    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. GIT UPDATE\n7. Exit\n")
     if choice == "1":
         print(RED + "Updating Kodi links...\n" + RESET)
         update_kodi_links()
@@ -158,6 +167,8 @@ while True:
         update_kodi_version()
         print()
     elif choice == "6":
+        update_repo()
+    elif choice == "7":
         print(RED + "Exiting...\n" + RESET)
         sys.exit()
     else:
