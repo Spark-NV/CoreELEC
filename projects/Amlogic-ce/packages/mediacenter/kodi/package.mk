@@ -4,7 +4,7 @@
 # Copyright (C) 2020-present Team CoreELEC (https://coreelec.tv)
 
 PKG_NAME="kodi"
-PKG_VERSION="bde76075ae0275a6ec971dfab526a605a1a0d334"
+PKG_VERSION="b3198e7461ac5556d7c93c73054e074bf08baae7"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kodi.tv"
 PKG_URL="https://github.com/Spark-NV/xbmc/archive/${PKG_VERSION}.tar.gz"
@@ -414,6 +414,7 @@ post_makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/share/kodi/addons
     cp -R ${PKG_DIR}/config/repository.coreelec ${INSTALL}/usr/share/kodi/addons/${ADDON_REPO_ID}
+    cp -R ${PKG_DIR}/config/repository.spark ${INSTALL}/usr/share/kodi/addons/repository.spark
     sed -e "s|@ADDON_URL@|${ADDON_URL}|g" -i ${INSTALL}/usr/share/kodi/addons/${ADDON_REPO_ID}/addon.xml
     sed -e "s|@ADDON_REPO_ID@|${ADDON_REPO_ID}|g" -i ${INSTALL}/usr/share/kodi/addons/${ADDON_REPO_ID}/addon.xml
     sed -e "s|@ADDON_REPO_NAME@|${ADDON_REPO_NAME}|g" -i ${INSTALL}/usr/share/kodi/addons/${ADDON_REPO_ID}/addon.xml
