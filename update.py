@@ -145,9 +145,25 @@ def update_repo():
     print(GREEN + "\nPushing all changes to origin\n" + RESET)
     os.system('git push')
     print(GREEN + "\nSuccessfully pushed all changes to origin\n" + RESET)
+    
+def build():
+    print("\nWhat are you building?")
+    choice1 = RED + "1. Amlogic-ng" + RESET
+    choice2 = GREEN + "2. Amlogic-ne" + RESET
+    choice = input(f"{choice1}\n{choice2}\n")
+    if choice == "1":
+        print(RED + "\nYou're building Amlogic-ng!\n" + RESET)
+        os.system('gnome-terminal -- /bin/bash -c "DEVICE=Amlogic-ng make image; exec bash"')
+        sys.exit()
+    elif choice == "2":
+        print(GREEN + "\nYou're building Amlogic-ne!\n" + RESET)
+        os.system('gnome-terminal -- /bin/bash -c "DEVICE=Amlogic-ne make image; exec bash"')
+        sys.exit()
+    else:
+        print(RED + "Invalid choice. Please try again." + RESET)
 
 while True:
-    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. GIT UPDATE\n7. Exit\n")
+    choice = input("Choose an option:\n1. Update Kodi hash/link\n2. Update Settings hash/link\n3. Show current kodi hash/link\n4. Show current settings hash/link\n5. Update CoreELEC version\n6. GIT UPDATE\n7. Build CoreELEC\n8. Exit\n")
     if choice == "1":
         print(RED + "Updating Kodi links...\n" + RESET)
         update_kodi_links()
@@ -168,7 +184,9 @@ while True:
     elif choice == "6":
         update_repo()
     elif choice == "7":
-        print(RED + "Exiting...\n" + RESET)
+        build()
+    elif choice == "8":
+        print(RED + "\nExiting...\n" + RESET)
         sys.exit()
     else:
         print("Invalid choice. Please try again.")
